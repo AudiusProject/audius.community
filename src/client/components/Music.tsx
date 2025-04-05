@@ -42,9 +42,11 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
 
   // Search for tracks
   const searchTracks = async () => {
-    if (!searchText.trim()) {
-      // If search is empty, show trending tracks
+    // Special case for empty search or "trending" keyword
+    if (!searchText.trim() || searchText.trim().toLowerCase() === 'trending') {
+      // Show trending tracks for empty search or "trending" keyword
       fetchTrendingTracks();
+      setDisplayedSearchText('trending');
       return;
     }
 
@@ -92,7 +94,12 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
 
   // Initial load - fetch trending tracks
   useEffect(() => {
-    fetchTrendingTracks();
+    if (searchText === 'trending') {
+      fetchTrendingTracks();
+      setDisplayedSearchText('trending');
+    } else {
+      searchTracks();
+    }
   }, []);
 
   // When search button is clicked (searchKey changes)

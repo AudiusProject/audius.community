@@ -24,7 +24,7 @@ export default function App() {
 
   const handleMusicTab = () => {
     setActiveTab('music');
-    setSearchText('');
+    setSearchText('trending');
   };
 
   const handleWebTab = () => {
