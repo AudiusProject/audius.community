@@ -6,19 +6,34 @@ export interface Project {
 
 const projects: Project[] = [
   {
-    title: "Search Engine Optimization (SEO)",
-    description: "Search engine optimization (SEO) is the process of improving the volume or quality of traffic to a web site or a web page from search ...",
-    link: "www.example.com/seo-project"
+    title: "d.audio",
+    description: "block explorer and dig tool for discovery music on the audius protocol",
+    link: "https://d.audio"
   },
   {
-    title: "SEO - Wikipedia, the free encyclopedia",
-    description: "SEO may refer to: Search engine optimization, the process of improving ranking in search engine results; Seasoned equity offering, a new equity issue by an already publicly-traded company",
-    link: "en.wikipedia.org/wiki/SEO"
+    title: "Fanlink",
+    description: "Shareable pages that link to all your track's stores. Automatically generated for all tracks on audius, pulling links from track descriptions",
+    link: "https://fanlink.audius.community"
   },
   {
-    title: "Search Engine Optimization (SEO) - Webmaster Tools Help",
-    description: "SEO is an acronym for \"search engine optimizer.\" Deciding to hire an SEO is a big decision that can potentially improve your ...",
-    link: "www.google.com/webmasters/tools/seo"
+    title: "Stem Splitter",
+    description: "An AI tool for splitting stems out from a track on audius",
+    link: "https://stemsplitter.audius.community"
+  },
+  {
+    title: "Audiuscast",
+    description: "A podcast importer for Audius. Sync your RSS feeds to your Audius account and import podcasts automatically.",
+    link: "https://audiuscast.com"
+  },
+  {
+    title: "CLI Player",
+    description: "A command line interface for Audius. Search for and play tracks, playlists, and podcasts from the comfort of your terminal.",
+    link: "https://github.com/audiusproject/cli-player"
+  },
+  {
+    title: "Lyrics On Chain",
+    description: "A tool to automatically add lyrics to your tracks on Audius",
+    link: "https://github.com/audiusproject/lyrics-on-chain"
   }
 ];
 
