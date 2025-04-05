@@ -79,6 +79,17 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     window.open(permalink, '_blank', 'noopener,noreferrer');
   };
 
+  // Format track description: truncate if longer than 200 characters
+  const formatDescription = (description: string | null | undefined): string => {
+    if (!description) return '';
+    
+    if (description.length > 200) {
+      return description.substring(0, 200) + '...';
+    }
+    
+    return description;
+  };
+
   // Initial load - fetch trending tracks
   useEffect(() => {
     fetchTrendingTracks();
@@ -110,22 +121,27 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
           : `Trending tracks 1-${tracks.length} of many (in ${loadTime} seconds)`}
       </div>
       
-      {tracks.map((track) => (
-        <div key={track.id} className="mb-[22px]">
-          <div 
-            className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
-            onClick={() => handleTrackClick(`https://audius.co${track.permalink}`)}
-          >
-            {track.title}
+      {tracks.map((track) => {
+        const fullPermalink = `https://audius.co${track.permalink}`;
+        const description = formatDescription(track.description);
+        
+        return (
+          <div key={track.id} className="mb-[22px]">
+            <div 
+              className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
+              onClick={() => handleTrackClick(fullPermalink)}
+            >
+              {track.title}
+            </div>
+            <div className="text-[#00802A] text-[13px] leading-[1.4]">
+              {fullPermalink}
+            </div>
+            <div className="text-black text-[13px] leading-[1.4] mt-[1px] font-[Arial]">
+              {track.user.name} ({track.user.handle}){description ? ` - ${description}` : ''}
+            </div>
           </div>
-          <div className="text-[#00802A] text-[13px] leading-[1.4]">
-            {`https://audius.co${track.permalink}`}
-          </div>
-          <div className="text-black text-[13px] leading-[1.4] mt-[1px] font-[Arial]">
-            {track.user.name} ({track.user.handle}) - {track.description}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   ) : (
     <div className="font-[Arial]">
