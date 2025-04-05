@@ -18,6 +18,11 @@ const Projects: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  // Function to handle clicking on a project title
+  const handleProjectClick = (link: string) => {
+    window.open(link, '_blank', 'noopener,noreferrer');
+  };
+
   return loadTime ? (
     <div className="font-[Arial]">
       <div className="text-[#666] text-[13px] mb-[10px] pb-[2px]">
@@ -26,7 +31,10 @@ const Projects: React.FC = () => {
       
       {projects.map((project, index) => (
         <div key={index} className="mb-[22px]">
-          <div className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]">
+          <div 
+            className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
+            onClick={() => handleProjectClick(project.link)}
+          >
             {project.title}
           </div>
           <div className="text-[#00802A] text-[13px] leading-[1.4]">

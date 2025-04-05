@@ -74,6 +74,11 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     }
   };
 
+  // Function to handle clicking on a track title
+  const handleTrackClick = (permalink: string) => {
+    window.open(permalink, '_blank', 'noopener,noreferrer');
+  };
+
   // Initial load - fetch trending tracks
   useEffect(() => {
     fetchTrendingTracks();
@@ -107,11 +112,14 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       
       {tracks.map((track) => (
         <div key={track.id} className="mb-[22px]">
-          <div className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]">
+          <div 
+            className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
+            onClick={() => handleTrackClick(`https://audius.co${track.permalink}`)}
+          >
             {track.title}
           </div>
           <div className="text-[#00802A] text-[13px] leading-[1.4]">
-            {track.permalink}
+            {`https://audius.co${track.permalink}`}
           </div>
           <div className="text-black text-[13px] leading-[1.4] mt-[1px] font-[Arial]">
             {track.user.name} ({track.user.handle}) - {track.description}

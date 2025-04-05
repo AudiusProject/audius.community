@@ -49,26 +49,26 @@ export default function App() {
   return (
     <HarmonyThemeProvider theme='day'>
       <Flex direction='column' alignItems='center'>
-        <div className="w-full max-w-[600px] pt-8 pb-4">
+        <div className="w-full max-w-[800px] min-w-[400px] px-5 pt-8 pb-4 mx-auto">
           {/* Header with Audius logo and search bar */}
           <div className="flex flex-col mb-4">
             {/* Logo and search bar in one row */}
-            <div className="flex items-center mb-2">
+            <div className="flex items-center mb-2 flex-wrap">
               <img 
                 src="/static/badgePoweredByAudiusLight.svg"
                 alt="Audius Logo" 
-                className="h-[40px] w-auto mr-4"
+                className="h-[40px] w-auto mr-4 mb-2"
               />
               
               {/* Google-style search bar */}
-              <div className="flex">
+              <div className="flex flex-1 min-w-[300px]">
                 <input
                   type="text"
                   value={searchText}
                   readOnly={activeTab !== 'music'}
                   onChange={handleSearchTextChange}
                   onKeyDown={handleKeyDown}
-                  className="border border-[#919191] h-[25px] text-[#000] px-2 py-1 text-[13px] w-[350px] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)] bg-white"
+                  className="border border-[#919191] h-[25px] text-[#000] px-2 py-1 text-[13px] flex-1 shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)] bg-white"
                 />
                 <button 
                   className="bg-[#dcdcdc] border border-[#919191] border-l-0 h-[25px] text-[13px] px-2 hover:bg-[#c6c6c6]"
