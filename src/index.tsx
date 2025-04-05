@@ -10,6 +10,7 @@ app.get('/', (c) => {
         <head>
           <meta charSet='utf-8' />
           <meta content='width=device-width, initial-scale=1' name='viewport' />
+          <link rel="icon" href="/static/favicon.png" type="image/png" />
           {import.meta.env.PROD ? (
             <script type='module' src='/static/client/main.js'></script>
           ) : (
