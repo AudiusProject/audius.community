@@ -32,6 +32,20 @@ export default function App() {
     setSearchText(ORIGINAL_SEARCH_TEXT);
   };
 
+  // Allow the search bar to be editable when on the Music tab
+  const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (activeTab === 'music') {
+      setSearchText(e.target.value);
+    }
+  };
+
+  // Handle key press events for the search input
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <HarmonyThemeProvider theme='day'>
       <Flex direction='column' alignItems='center'>
@@ -51,7 +65,9 @@ export default function App() {
                 <input
                   type="text"
                   value={searchText}
-                  readOnly
+                  readOnly={activeTab !== 'music'}
+                  onChange={handleSearchTextChange}
+                  onKeyDown={handleKeyDown}
                   className="border border-[#919191] h-[25px] text-[#000] px-2 py-1 text-[13px] w-[350px] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)] bg-white"
                 />
                 <button 
@@ -88,7 +104,7 @@ export default function App() {
           
           {/* Render the appropriate content based on active tab */}
           {activeTab === 'web' && <Projects key={searchKey} />}
-          {activeTab === 'music' && <Music />}
+          {activeTab === 'music' && <Music searchText={searchText} onSearch={searchKey} />}
         </div>
       </Flex>
     </HarmonyThemeProvider>

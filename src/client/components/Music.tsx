@@ -2,38 +2,90 @@ import React, { useState, useEffect } from 'react';
 import { useSdk } from '../hooks/useSdk';
 import { Track } from '@audius/sdk';
 
+interface MusicProps {
+  searchText: string;
+  onSearch: number;
+}
 
-const Music: React.FC = () => {
+const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
   const { sdk } = useSdk();
   const [tracks, setTracks] = useState<Track[]>([]);
   const [loadTime, setLoadTime] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSearchResult, setIsSearchResult] = useState<boolean>(false);
+  const [prevSearchKey, setPrevSearchKey] = useState<number>(onSearch);
+  const [displayedSearchText, setDisplayedSearchText] = useState<string>('');
 
-  useEffect(() => {
-    const fetchTrendingTracks = async () => {
-      const startTime = performance.now();
+  // Fetch trending tracks
+  const fetchTrendingTracks = async () => {
+    const startTime = performance.now();
+    
+    try {
+      setIsLoading(true);
+      setIsSearchResult(false);
+      // Fetch trending tracks from Audius SDK
+      const response = await sdk.tracks.getTrendingTracks({
+        time: 'week'
+      });
       
-      try {
-        setIsLoading(true);
-        // Fetch trending tracks from Audius SDK
-        const response = await sdk.tracks.getTrendingTracks({
-          time: 'week'
-        });
-        
-        setTracks(response.data || []);
-      } catch (error) {
-        console.error('Error fetching trending tracks:', error);
-      } finally {
-        setIsLoading(false);
-        const endTime = performance.now();
-        const durationMs = endTime - startTime;
-        const durationSeconds = (durationMs / 1000).toFixed(2);
-        setLoadTime(durationSeconds);
-      }
-    };
+      setTracks(response.data || []);
+    } catch (error) {
+      console.error('Error fetching trending tracks:', error);
+    } finally {
+      setIsLoading(false);
+      const endTime = performance.now();
+      const durationMs = endTime - startTime;
+      const durationSeconds = (durationMs / 1000).toFixed(2);
+      setLoadTime(durationSeconds);
+    }
+  };
 
+  // Search for tracks
+  const searchTracks = async () => {
+    if (!searchText.trim()) {
+      // If search is empty, show trending tracks
+      fetchTrendingTracks();
+      return;
+    }
+
+    const startTime = performance.now();
+    
+    try {
+      setIsLoading(true);
+      setIsSearchResult(true);
+      // Update the displayed search text when search is triggered
+      setDisplayedSearchText(searchText);
+      
+      // Search tracks from Audius SDK
+      const response = await sdk.tracks.searchTracks({
+        query: searchText
+      });
+      
+      const data = response.data || [];
+      setTracks(data);
+    } catch (error) {
+      console.error('Error searching tracks:', error);
+    } finally {
+      setIsLoading(false);
+      const endTime = performance.now();
+      const durationMs = endTime - startTime;
+      const durationSeconds = (durationMs / 1000).toFixed(2);
+      setLoadTime(durationSeconds);
+    }
+  };
+
+  // Initial load - fetch trending tracks
+  useEffect(() => {
     fetchTrendingTracks();
-  }, [sdk]);
+  }, []);
+
+  // When search button is clicked (searchKey changes)
+  useEffect(() => {
+    if (onSearch !== prevSearchKey) {
+      setPrevSearchKey(onSearch);
+      searchTracks();
+    }
+  }, [onSearch, searchText]);
 
   if (isLoading) {
     return (
@@ -48,7 +100,9 @@ const Music: React.FC = () => {
   return loadTime ? (
     <div className="font-[Arial]">
       <div className="text-[#666] text-[13px] mb-[10px] pb-[2px]">
-        Results 1-{tracks.length} of many (in {loadTime} seconds)
+        {isSearchResult 
+          ? `Results 1-${tracks.length} for "${displayedSearchText}" (in ${loadTime} seconds)` 
+          : `Trending tracks 1-${tracks.length} of many (in ${loadTime} seconds)`}
       </div>
       
       {tracks.map((track) => (
