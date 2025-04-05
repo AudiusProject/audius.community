@@ -63,7 +63,7 @@ body:
     id: hosting-details
     attributes:
       label: 🛠️ Hosting Details (if applicable)
-      description: If you're requesting a subdomain, explain how your app is hosted (e.g. Netlify, Vercel, static files, Cloudflare Workers, etc.)
+      description: If you're requesting a subdomain, explain how your app is hosted or provide deployment instructions.
       placeholder: My app is deployed as a static site on Vercel and can be served via a redirect or hosted by audius.community.
     validations:
       required: false

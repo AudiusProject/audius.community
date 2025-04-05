@@ -17,6 +17,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
   const [displayedSearchText, setDisplayedSearchText] = useState<string>('');
   const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [loadingTrackId, setLoadingTrackId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Fetch trending tracks
@@ -128,8 +129,9 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       setIsPlaying(false);
     }
 
-    // Set the new track as the playing track
-    setPlayingTrackId(trackId);
+    // Set the new track as the loading track
+    setLoadingTrackId(trackId);
+    setPlayingTrackId(null);
 
     // Get the stream URL for the new track
     const streamUrl = await getStreamUrl(trackId);
@@ -151,12 +153,18 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       // Play the new track
       audioRef.current.play()
         .then(() => {
+          setLoadingTrackId(null);
+          setPlayingTrackId(trackId);
           setIsPlaying(true);
         })
         .catch(error => {
           console.error('Error playing audio:', error);
+          setLoadingTrackId(null);
           setIsPlaying(false);
         });
+    } else {
+      // If no stream URL was found, clear the loading state
+      setLoadingTrackId(null);
     }
   };
 
@@ -188,6 +196,20 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     }
   }, [onSearch, searchText]);
 
+  // Spinner component for loading state
+  const LoadingSpinner = () => (
+    <div className="ml-1 inline-flex items-center justify-center">
+      <span className="text-[#6666DD] text-lg px-0.5" style={{ animation: 'pulse 0.8s infinite', animationDelay: '0s' }}>•</span>
+      <span className="text-[#6666DD] text-lg px-0.5" style={{ animation: 'pulse 0.8s infinite', animationDelay: '0.4s' }}>•</span>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+
   if (isLoading) {
     return (
       <div className="font-[Arial]">
@@ -210,6 +232,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
         const fullPermalink = `https://audius.co${track.permalink}`;
         const description = formatDescription(track.description);
         const isCurrentTrackPlaying = track.id === playingTrackId && isPlaying;
+        const isCurrentTrackLoading = track.id === loadingTrackId;
         
         return (
           <div key={track.id} className="mb-[22px]">
@@ -221,16 +244,21 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
               >
                 {track.title}
               </div>
-              <button
-                className="text-[#2200C1] ml-1 text-xl cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  togglePlayPause(track.id);
-                }}
-                aria-label={isCurrentTrackPlaying ? "Pause" : "Play"}
-              >
-                {isCurrentTrackPlaying ? "⏸️" : "▶️"}
-              </button>
+              {isCurrentTrackLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <button
+                  className="text-[#2200C1] ml-1 text-xl cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    togglePlayPause(track.id);
+                  }}
+                  aria-label={isCurrentTrackPlaying ? "Pause" : "Play"}
+                  disabled={isCurrentTrackLoading}
+                >
+                  {isCurrentTrackPlaying ? "⏸️" : "▶️"}
+                </button>
+              )}
             </div>
             <div className="text-[#00802A] text-[13px] leading-[1.4]">
               {fullPermalink}
