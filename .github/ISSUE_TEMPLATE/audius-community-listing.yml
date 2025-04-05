@@ -1,0 +1,74 @@
+name: 🚀 Request Project Listing on audius.community
+description: Submit your project to be featured on audius.community
+title: "Listing Request: [Your Project Name]"
+labels: [submission, listing-request]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your interest in getting listed on **audius.community**!
+
+        Fill out the details below so we can learn more about your project and consider it for inclusion.
+
+  - type: input
+    id: project-name
+    attributes:
+      label: 🔤 Project Name
+      description: What's the name of your project?
+      placeholder: e.g. AudiusPlayer
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-description
+    attributes:
+      label: 📄 Project Description
+      description: Tell us briefly what your project does and who it's for.
+      placeholder: A lightweight Audius music player built for desktop.
+    validations:
+      required: true
+
+  - type: input
+    id: project-url
+    attributes:
+      label: 🌐 Project Website or Demo URL
+      description: Share a link to your live project or demo.
+      placeholder: https://yourprojecturl.com
+    validations:
+      required: true
+
+  - type: input
+    id: github-url
+    attributes:
+      label: 🐙 GitHub Repository
+      description: Provide the link to your GitHub repo (public preferred).
+      placeholder: https://github.com/yourname/yourproject
+    validations:
+      required: true
+
+  - type: dropdown
+    id: subdomain-request
+    attributes:
+      label: 🌍 Would you like hosting on a subdomain of audius.community?
+      description: Select "Yes" if you want your project accessible at `yourproject.audius.community`
+      options:
+        - "No"
+        - "Yes - I’ll need a redirect"
+        - "Yes - I have a static frontend"
+        - "Yes - It’s compatible with Cloudflare Workers"
+    validations:
+      required: true
+
+  - type: textarea
+    id: hosting-details
+    attributes:
+      label: 🛠️ Hosting Details (if applicable)
+      description: If you're requesting a subdomain, explain how your app is hosted (e.g. Netlify, Vercel, static files, Cloudflare Workers, etc.)
+      placeholder: My app is deployed as a static site on Vercel and can be served via a redirect or hosted by audius.community.
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        We’ll review your submission and get in touch if we need anything else. Thanks for contributing to the Audius community! 🎧

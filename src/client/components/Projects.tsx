@@ -3,9 +3,23 @@ import projects from '../data/projects.ts';
 
 const Projects: React.FC = () => {
   const [loadTime, setLoadTime] = useState<string | null>(null);
+  const [shuffledProjects, setShuffledProjects] = useState(projects);
+
+  // Fisher-Yates (Knuth) shuffle algorithm
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
   useEffect(() => {
     const startTime = performance.now();
+    
+    // Shuffle the projects on each load
+    setShuffledProjects(shuffleArray(projects));
     
     const timeoutId = setTimeout(() => {
       const endTime = performance.now();
@@ -29,7 +43,7 @@ const Projects: React.FC = () => {
         Results for community projects (in {loadTime} milliseconds)
       </div>
       
-      {projects.map((project, index) => (
+      {shuffledProjects.map((project, index) => (
         <div key={index} className="mb-[22px]">
           <div 
             className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"

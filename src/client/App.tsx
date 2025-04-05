@@ -11,7 +11,7 @@ const ORIGINAL_SEARCH_TEXT = "community projects built on the Audius protocol";
 
 export default function App() {
   const [searchKey, setSearchKey] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<'web' | 'music' | 'submit'>('web');
+  const [activeTab, setActiveTab] = useState<'web' | 'music' | 'submit' | 'badges'>('web');
   const [searchText, setSearchText] = useState<string>(ORIGINAL_SEARCH_TEXT);
   
   const handleSearch = () => {
@@ -22,6 +22,25 @@ export default function App() {
     window.open('https://github.com/audiusproject', '_blank');
   };
 
+  const handleOpenAudiusDocs = () => {
+    window.open('https://docs.audius.org', '_blank', 'noopener,noreferrer');
+  };
+
+  const handleDownloadBadges = () => {
+    // Create a temporary anchor element to trigger the download
+    const link = document.createElement('a');
+    link.href = '/static/Developer Badges.zip';
+    link.download = 'Developer Badges.zip';
+    link.setAttribute('download', 'Developer Badges.zip');
+    document.body.appendChild(link);
+    
+    // Trigger the download
+    link.click();
+    
+    // Clean up
+    document.body.removeChild(link);
+  };
+
   const handleMusicTab = () => {
     setActiveTab('music');
     setSearchText('trending');
@@ -30,6 +49,10 @@ export default function App() {
   const handleWebTab = () => {
     setActiveTab('web');
     setSearchText(ORIGINAL_SEARCH_TEXT);
+  };
+
+  const handleBadgesTab = () => {
+    handleDownloadBadges();
   };
 
   // Allow the search bar to be editable when on the Music tab
@@ -57,7 +80,8 @@ export default function App() {
               <img 
                 src="/static/badgePoweredByAudiusLight.svg"
                 alt="Audius Logo" 
-                className="h-[40px] w-auto mr-4 mb-2"
+                className="h-[40px] w-auto mr-4 mb-2 cursor-pointer"
+                onClick={handleOpenAudiusDocs}
               />
               
               {/* Google-style search bar */}
@@ -81,7 +105,7 @@ export default function App() {
           </div>
           
           {/* Navigation */}
-          <div className="flex mb-3 border-b border-[#ebebeb] pb-1">
+          <div className="flex mb-3 border-b border-[#ebebeb] pb-1 flex-wrap">
             <div 
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'web' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
               onClick={handleWebTab}
@@ -99,6 +123,12 @@ export default function App() {
               onClick={handleOpenGithub}
             >
               Add My Project
+            </div>
+            <div 
+              className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'badges' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
+              onClick={handleBadgesTab}
+            >
+              Download Dev Badges
             </div>
           </div>
           
