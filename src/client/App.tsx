@@ -19,7 +19,7 @@ export default function App() {
   };
 
   const handleOpenGithub = () => {
-    window.open('https://github.com/audiusproject', '_blank');
+    window.open('https://github.com/AudiusProject/audius.community/issues/new?template=audius-community-listing.yml', '_blank');
   };
 
   const handleOpenAudiusDocs = () => {
