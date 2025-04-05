@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSdk } from '../hooks/useSdk';
 import { Track } from '@audius/sdk';
 
@@ -15,6 +15,9 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
   const [isSearchResult, setIsSearchResult] = useState<boolean>(false);
   const [prevSearchKey, setPrevSearchKey] = useState<number>(onSearch);
   const [displayedSearchText, setDisplayedSearchText] = useState<string>('');
+  const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Fetch trending tracks
   const fetchTrendingTracks = async () => {
@@ -92,6 +95,81 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     return description;
   };
 
+  // Get stream URL for a track
+  const getStreamUrl = async (trackId: string): Promise<string | null> => {
+    try {
+      const response = await sdk.tracks.getTrackStreamUrl({ trackId });
+      return response;
+    } catch (error) {
+      console.error('Error getting stream URL:', error);
+      return null;
+    }
+  };
+
+  // Toggle play/pause for a track
+  const togglePlayPause = async (trackId: string) => {
+    // If we're clicking on the currently playing track
+    if (trackId === playingTrackId) {
+      if (isPlaying) {
+        // Pause the current track
+        audioRef.current?.pause();
+        setIsPlaying(false);
+      } else {
+        // Resume the current track
+        audioRef.current?.play();
+        setIsPlaying(true);
+      }
+      return;
+    }
+
+    // Stop the currently playing track if there is one
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+
+    // Set the new track as the playing track
+    setPlayingTrackId(trackId);
+
+    // Get the stream URL for the new track
+    const streamUrl = await getStreamUrl(trackId);
+    
+    if (streamUrl) {
+      // Create a new audio element if it doesn't exist
+      if (!audioRef.current) {
+        audioRef.current = new Audio(streamUrl);
+        
+        // Add event listener for when the audio ends
+        audioRef.current.addEventListener('ended', () => {
+          setIsPlaying(false);
+        });
+      } else {
+        // Update the src of the existing audio element
+        audioRef.current.src = streamUrl;
+      }
+      
+      // Play the new track
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(error => {
+          console.error('Error playing audio:', error);
+          setIsPlaying(false);
+        });
+    }
+  };
+
+  // Clean up audio when component unmounts
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+      }
+    };
+  }, []);
+
   // Initial load - fetch trending tracks
   useEffect(() => {
     if (searchText === 'trending') {
@@ -131,14 +209,27 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       {tracks.map((track) => {
         const fullPermalink = `https://audius.co${track.permalink}`;
         const description = formatDescription(track.description);
+        const isCurrentTrackPlaying = track.id === playingTrackId && isPlaying;
         
         return (
           <div key={track.id} className="mb-[22px]">
-            <div 
-              className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
-              onClick={() => handleTrackClick(fullPermalink)}
-            >
-              {track.title}
+            <div className="flex items-center">
+              <div 
+                className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
+                onClick={() => handleTrackClick(fullPermalink)}
+              >
+                {track.title}
+              </div>
+              <button
+                className="text-[#2200C1] ml-1 text-xl cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePlayPause(track.id);
+                }}
+                aria-label={isCurrentTrackPlaying ? "Pause" : "Play"}
+              >
+                {isCurrentTrackPlaying ? "\u23F8" : "\u23F5"}
+              </button>
             </div>
             <div className="text-[#00802A] text-[13px] leading-[1.4]">
               {fullPermalink}

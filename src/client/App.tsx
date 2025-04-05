@@ -110,7 +110,7 @@ export default function App() {
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'web' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
               onClick={handleWebTab}
             >
-              Web
+              Community
             </div>
             <div 
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'music' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
