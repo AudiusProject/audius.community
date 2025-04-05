@@ -215,8 +215,9 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
           <div key={track.id} className="mb-[22px]">
             <div className="flex items-center">
               <div 
-                className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2]"
+                className="text-[#2200C1] text-[16px] mb-[1px] underline cursor-pointer font-normal leading-[1.2] overflow-hidden whitespace-nowrap text-ellipsis max-w-[90%]"
                 onClick={() => handleTrackClick(fullPermalink)}
+                title={track.title}
               >
                 {track.title}
               </div>
@@ -228,7 +229,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
                 }}
                 aria-label={isCurrentTrackPlaying ? "Pause" : "Play"}
               >
-                {isCurrentTrackPlaying ? "\u23F8" : "\u23F5"}
+                {isCurrentTrackPlaying ? "⏵" : "⏸"}
               </button>
             </div>
             <div className="text-[#00802A] text-[13px] leading-[1.4]">

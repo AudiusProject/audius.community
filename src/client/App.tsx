@@ -128,7 +128,7 @@ export default function App() {
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'badges' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
               onClick={handleBadgesTab}
             >
-              Download Dev Badges
+              Dev Badges
             </div>
           </div>
           
