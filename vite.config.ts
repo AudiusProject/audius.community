@@ -10,6 +10,14 @@ import path from 'path'
 export default defineConfig(({ mode }) => {
   if (mode === 'client') {
     return {
+      publicDir: 'public',
+      assetsInclude: [
+        '**/*.png',
+        '**/*.jpg',
+        '**/*.jpeg',
+        '**/*.gif',
+        '**/*.svg',
+      ],
       plugins: [
         nodePolyfills({
           globals: {

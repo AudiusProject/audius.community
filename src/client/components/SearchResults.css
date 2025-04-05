@@ -1,0 +1,43 @@
+.search-results {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.results-info {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 10px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.search-result {
+  margin-bottom: 18px;
+}
+
+.result-title {
+  color: #2200C1;
+  font-size: 16px;
+  margin-bottom: 1px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.result-title:hover {
+  text-decoration: underline;
+}
+
+.result-description {
+  color: #000;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 1px;
+}
+
+.result-link {
+  color: #00802A;
+  font-size: 13px;
+} 

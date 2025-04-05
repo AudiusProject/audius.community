@@ -2,12 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import '@audius/harmony/dist/harmony.css'
-import { AuthProvider } from './contexts/AuthProvider.tsx'
+import '../../styles/tailwind.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <App />
   </React.StrictMode>
 )
