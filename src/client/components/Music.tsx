@@ -229,7 +229,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
                 }}
                 aria-label={isCurrentTrackPlaying ? "Pause" : "Play"}
               >
-                {isCurrentTrackPlaying ? "⏵" : "⏸"}
+                {isCurrentTrackPlaying ? "⏸️" : "▶️"}
               </button>
             </div>
             <div className="text-[#00802A] text-[13px] leading-[1.4]">
