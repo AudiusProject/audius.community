@@ -28,11 +28,13 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       setIsLoading(true);
       setIsSearchResult(false);
       // Fetch trending tracks from Audius SDK
-      const response = await sdk.tracks.getTrendingTracks({
-        time: 'week'
-      });
-      
-      setTracks(response.data || []);
+      // TODO: put sdk back once using bridgerton
+      // const response = await sdk.tracks.getTrendingTracks({
+      //   time: 'week'
+      // });
+      const response = await fetch('https://bridgerton.audius.co/v1/tracks/trending?time=week&limit=10');
+      const data = await response.json();
+      setTracks(data.data || []);
     } catch (error) {
       console.error('Error fetching trending tracks:', error);
     } finally {
