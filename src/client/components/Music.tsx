@@ -109,6 +109,35 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     }
   };
 
+  // Find the index of a track in the tracks array
+  const findTrackIndex = (trackId: string): number => {
+    return tracks.findIndex(track => track.id === trackId);
+  };
+
+  // Skip to the next track
+  const skipToNextTrack = async () => {
+    if (playingTrackId && tracks.length > 0) {
+      const currentIndex = findTrackIndex(playingTrackId);
+      if (currentIndex !== -1) {
+        const nextIndex = (currentIndex + 1) % tracks.length;
+        const nextTrack = tracks[nextIndex];
+        await togglePlayPause(nextTrack.id);
+      }
+    }
+  };
+
+  // Skip to the previous track
+  const skipToPreviousTrack = async () => {
+    if (playingTrackId && tracks.length > 0) {
+      const currentIndex = findTrackIndex(playingTrackId);
+      if (currentIndex !== -1) {
+        const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        const prevTrack = tracks[prevIndex];
+        await togglePlayPause(prevTrack.id);
+      }
+    }
+  };
+
   // Toggle play/pause for a track
   const togglePlayPause = async (trackId: string) => {
     // If we're clicking on the currently playing track
@@ -146,6 +175,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
         // Add event listener for when the audio ends
         audioRef.current.addEventListener('ended', () => {
           setIsPlaying(false);
+          skipToNextTrack();
         });
       } else {
         // Update the src of the existing audio element
@@ -212,6 +242,55 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     </div>
   );
 
+  // Floating Music Controls component
+  const FloatingMusicControls = () => {
+    if (!playingTrackId && !loadingTrackId) return null;
+    
+    const currentTrack = tracks.find(track => track.id === playingTrackId);
+    const isLoading = loadingTrackId !== null;
+    
+    return (
+      <div className="fixed bottom-4 right-4 bg-white shadow-lg rounded-lg p-3 flex flex-col items-center z-50">
+        <div className="text-[#2200C1] font-medium mb-2 w-48 overflow-hidden whitespace-nowrap text-ellipsis text-center">
+          {currentTrack?.title || 'Loading...'}
+        </div>
+        
+        <div className="flex items-center space-x-4">
+          <button 
+            className="text-[#2200C1] text-2xl hover:text-[#4400E1] focus:outline-none"
+            onClick={skipToPreviousTrack}
+            disabled={isLoading}
+            aria-label="Previous Track"
+          >
+            ⏮️
+          </button>
+          
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <button
+              className="text-[#2200C1] text-2xl hover:text-[#4400E1] focus:outline-none"
+              onClick={() => playingTrackId && togglePlayPause(playingTrackId)}
+              aria-label={isPlaying ? "Pause" : "Play"}
+              disabled={isLoading}
+            >
+              {isPlaying ? "⏸️" : "▶️"}
+            </button>
+          )}
+          
+          <button 
+            className="text-[#2200C1] text-2xl hover:text-[#4400E1] focus:outline-none"
+            onClick={skipToNextTrack}
+            disabled={isLoading}
+            aria-label="Next Track"
+          >
+            ⏭️
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="font-[Arial]">
@@ -271,6 +350,8 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
           </div>
         );
       })}
+      
+      <FloatingMusicControls />
     </div>
   ) : (
     <div className="font-[Arial]">
