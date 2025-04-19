@@ -78,6 +78,13 @@ export default function App() {
     }
   };
 
+  // Handle click on search input
+  const handleSearchClick = () => {
+    if (activeTab !== 'music') {
+      handleMusicTab();
+    }
+  };
+
   return (
     <HarmonyThemeProvider theme='day'>
       <Flex direction='column' alignItems='center'>
@@ -101,6 +108,7 @@ export default function App() {
                   readOnly={activeTab !== 'music'}
                   onChange={handleSearchTextChange}
                   onKeyDown={handleKeyDown}
+                  onClick={handleSearchClick}
                   className="border border-[#919191] h-[25px] text-[#000] px-2 py-1 text-[13px] flex-1 shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)] bg-white"
                 />
                 <button 
