@@ -10,6 +10,11 @@ body:
 
         Fill out the details below so we can learn more about your project and consider it for inclusion.
 
+        Criteria:
+        * Project must be open source
+        * Project must be built on the Audius protocol
+        * Show developer badges where possible
+
   - type: input
     id: project-name
     attributes:
@@ -23,7 +28,7 @@ body:
     id: project-description
     attributes:
       label: 📄 Project Description
-      description: Tell us briefly what your project does and who it's for.
+      description: Tell the community briefly what your project does and who it's for.
       placeholder: A lightweight Audius music player built for desktop.
     validations:
       required: true
@@ -41,7 +46,7 @@ body:
     id: github-url
     attributes:
       label: 🐙 GitHub Repository
-      description: Provide the link to your GitHub repo (public preferred).
+      description: Provide the link to your GitHub repo.
       placeholder: https://github.com/yourname/yourproject
     validations:
       required: true
@@ -62,13 +67,13 @@ body:
   - type: textarea
     id: hosting-details
     attributes:
-      label: 🛠️ Hosting Details (if applicable)
-      description: If you're requesting a subdomain, explain how your app is hosted or provide deployment instructions.
-      placeholder: My app is deployed as a static site on Vercel and can be served via a redirect or hosted by audius.community.
+      label: 🛠️ Hosting Details (if yes)
+      description: If you're requesting a subdomain or redirect, explain how your app is hosted or provide deployment instructions. If you would like a specific subdomain name, please specify. Otherwise, your project name will be used.
+      placeholder: My app is deployed as a static site on Vercel and can be served via a redirect on audius.community.
     validations:
       required: false
 
   - type: markdown
     attributes:
       value: |
-        We’ll review your submission and get in touch if we need anything else. Thanks for contributing to the Audius community! 🎧
+        Ty 🫡. Let's build the future of music together. 🎧

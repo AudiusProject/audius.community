@@ -4,6 +4,7 @@ import {
 } from '@audius/harmony'
 import Projects from './components/Projects'
 import Music from './components/Music'
+import Help from './components/Help'
 import { useState } from 'react'
 
 // Original search text constant
@@ -11,7 +12,7 @@ const ORIGINAL_SEARCH_TEXT = "community projects built on the Audius protocol";
 
 export default function App() {
   const [searchKey, setSearchKey] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<'web' | 'music' | 'submit' | 'badges'>('web');
+  const [activeTab, setActiveTab] = useState<'web' | 'music' | 'docs' | 'submit' | 'badges' | 'help'>('web');
   const [searchText, setSearchText] = useState<string>(ORIGINAL_SEARCH_TEXT);
   
   const handleSearch = () => {
@@ -46,6 +47,10 @@ export default function App() {
     setSearchText('trending');
   };
 
+  const handleDocsTab = () => {
+    window.open('https://docs.audius.org', '_blank', 'noopener,noreferrer');
+  };
+
   const handleWebTab = () => {
     setActiveTab('web');
     setSearchText(ORIGINAL_SEARCH_TEXT);
@@ -53,6 +58,10 @@ export default function App() {
 
   const handleBadgesTab = () => {
     handleDownloadBadges();
+  };
+  
+  const handleHelpTab = () => {
+    setActiveTab('help');
   };
 
   // Allow the search bar to be editable when on the Music tab
@@ -119,6 +128,12 @@ export default function App() {
               Music
             </div>
             <div 
+              className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'docs' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
+              onClick={handleDocsTab}
+            >
+              Docs
+            </div>
+            <div 
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'submit' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
               onClick={handleOpenGithub}
             >
@@ -128,13 +143,20 @@ export default function App() {
               className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'badges' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
               onClick={handleBadgesTab}
             >
-              Dev Badges
+              Download Dev Badges
+            </div>
+            <div 
+              className={`text-[13px] mr-4 pb-1 cursor-pointer ${activeTab === 'help' ? 'text-[#1a0dab] border-b-[3px] border-[#1a0dab]' : 'text-[#5f6368]'}`}
+              onClick={handleHelpTab}
+            >
+              ?
             </div>
           </div>
           
           {/* Render the appropriate content based on active tab */}
           {activeTab === 'web' && <Projects key={searchKey} />}
           {activeTab === 'music' && <Music searchText={searchText} onSearch={searchKey} />}
+          {activeTab === 'help' && <Help />}
         </div>
       </Flex>
     </HarmonyThemeProvider>

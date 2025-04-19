@@ -6,13 +6,13 @@ export interface Project {
 
 const projects: Project[] = [
   {
-    title: "d.audio",
+    title: "w3.audio",
     description: "block explorer and dig tool for discovery music on the audius protocol",
-    link: "https://d.audio"
+    link: "https://w3.audio"
   },
   {
     title: "Fanlink",
-    description: "Shareable pages that link to all your track's stores. Automatically generated for all tracks on audius, pulling links from track descriptions",
+    description: "Shareable pages that link to all your track's stores. Automatically generated for all tracks on audius, pulling links from track descriptions.",
     link: "https://fanlink.audius.community"
   },
   {
@@ -26,14 +26,14 @@ const projects: Project[] = [
     link: "https://audiuscast.com"
   },
   {
-    title: "CLI Player",
-    description: "A command line interface for Audius. Search for and play tracks, playlists, and podcasts from the comfort of your terminal.",
-    link: "https://github.com/audiusproject/cli-player"
+    title: "Audius Terminal Player",
+    description: "A music player to steam and discover music on Audius directly from your terminal.",
+    link: "https://github.com/Kyle-Shanks/audius_cli_player_test"
   },
   {
     title: "Lyrics On Chain",
     description: "A tool to automatically add lyrics to your tracks on Audius",
-    link: "https://github.com/audiusproject/lyrics-on-chain"
+    link: "http://lyricsonchain.com/"
   }
 ];
 
