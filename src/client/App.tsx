@@ -6,6 +6,7 @@ import Projects from './components/Projects'
 import Music from './components/Music'
 import Help from './components/Help'
 import { useState } from 'react'
+import { FloatingMusicControls } from './contexts/MusicContext'
 
 // Original search text constant
 const ORIGINAL_SEARCH_TEXT = "community projects built on the Audius protocol";
@@ -165,6 +166,9 @@ export default function App() {
           {activeTab === 'web' && <Projects key={searchKey} />}
           {activeTab === 'music' && <Music searchText={searchText} onSearch={searchKey} />}
           {activeTab === 'help' && <Help />}
+
+          {/* Floating Music Controls are always visible regardless of active tab */}
+          <FloatingMusicControls />
         </div>
       </Flex>
     </HarmonyThemeProvider>
