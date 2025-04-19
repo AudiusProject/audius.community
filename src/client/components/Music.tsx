@@ -18,7 +18,10 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
   const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [loadingTrackId, setLoadingTrackId] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressIntervalRef = useRef<number | null>(null);
 
   // Fetch trending tracks
   const fetchTrendingTracks = async () => {
@@ -146,10 +149,17 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
         // Pause the current track
         audioRef.current?.pause();
         setIsPlaying(false);
+        // Clear progress interval
+        if (progressIntervalRef.current) {
+          window.clearInterval(progressIntervalRef.current);
+          progressIntervalRef.current = null;
+        }
       } else {
         // Resume the current track
         audioRef.current?.play();
         setIsPlaying(true);
+        // Start progress interval
+        startProgressInterval();
       }
       return;
     }
@@ -158,7 +168,16 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
+      // Clear progress interval
+      if (progressIntervalRef.current) {
+        window.clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
     }
+
+    // Reset progress
+    setCurrentTime(0);
+    setDuration(0);
 
     // Set the new track as the loading track
     setLoadingTrackId(trackId);
@@ -172,10 +191,18 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       if (!audioRef.current) {
         audioRef.current = new Audio(streamUrl);
         
-        // Add event listener for when the audio ends
+        // Add event listeners
         audioRef.current.addEventListener('ended', () => {
           setIsPlaying(false);
+          if (progressIntervalRef.current) {
+            window.clearInterval(progressIntervalRef.current);
+            progressIntervalRef.current = null;
+          }
           skipToNextTrack();
+        });
+
+        audioRef.current.addEventListener('loadedmetadata', () => {
+          setDuration(audioRef.current?.duration || 0);
         });
       } else {
         // Update the src of the existing audio element
@@ -188,6 +215,8 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
           setLoadingTrackId(null);
           setPlayingTrackId(trackId);
           setIsPlaying(true);
+          setDuration(audioRef.current?.duration || 0);
+          startProgressInterval();
         })
         .catch(error => {
           console.error('Error playing audio:', error);
@@ -200,12 +229,48 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     }
   };
 
-  // Clean up audio when component unmounts
+  // Start interval to update progress
+  const startProgressInterval = () => {
+    if (progressIntervalRef.current) {
+      window.clearInterval(progressIntervalRef.current);
+    }
+    
+    progressIntervalRef.current = window.setInterval(() => {
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+      }
+    }, 1000);
+  };
+
+  // Handle seeking in the track
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const seekTime = parseFloat(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = seekTime;
+      setCurrentTime(seekTime);
+    }
+  };
+
+  // Format time (seconds) to mm:ss
+  const formatTime = (timeInSeconds: number): string => {
+    if (isNaN(timeInSeconds)) return '0:00';
+    
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  // Clean up audio and intervals when component unmounts
   useEffect(() => {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.src = '';
+      }
+      
+      if (progressIntervalRef.current) {
+        window.clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
       }
     };
   }, []);
@@ -250,9 +315,26 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
     const isLoading = loadingTrackId !== null;
     
     return (
-      <div className="fixed bottom-4 right-4 bg-white shadow-lg rounded-lg p-3 flex flex-col items-center z-50">
-        <div className="text-[#2200C1] font-medium mb-2 w-48 overflow-hidden whitespace-nowrap text-ellipsis text-center">
+      <div className="fixed bottom-4 right-4 bg-white shadow-lg rounded-lg p-3 flex flex-col items-center z-50" style={{ width: '300px' }}>
+        <div className="text-[#2200C1] font-medium mb-2 w-full overflow-hidden whitespace-nowrap text-ellipsis text-center">
           {currentTrack?.title || 'Loading...'}
+        </div>
+        
+        {/* Progress bar and time */}
+        <div className="w-full mb-2">
+          <div className="flex justify-between text-xs text-gray-600 mb-1">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max={duration || 100}
+            value={currentTime}
+            onChange={handleSeek}
+            disabled={isLoading || !playingTrackId}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#2200C1]"
+          />
         </div>
         
         <div className="flex items-center space-x-4">
