@@ -266,7 +266,7 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
               {fullPermalink}
             </div>
             <div className="text-black text-[13px] leading-[1.4] mt-[1px] font-[Arial]">
-              {track.user.name} ({track.user.handle}){description ? ` - ${description}` : ''}
+              {track.user.name} (@{track.user.handle}){description ? ` - ${description}` : ''}
             </div>
           </div>
         );

@@ -34,6 +34,11 @@ const projects: Project[] = [
     title: "Lyrics On Chain",
     description: "A tool to automatically add lyrics to your tracks on Audius",
     link: "http://lyricsonchain.com/"
+  },
+  {
+    title: "Elemental",
+    description: "A lightweight and fast minimal audius ui",
+    link: "https://elemental.stereosteve.com"
   }
 ];
 
