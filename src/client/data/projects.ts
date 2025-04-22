@@ -39,6 +39,11 @@ const projects: Project[] = [
     title: "Elemental",
     description: "A lightweight and fast minimal audius ui",
     link: "https://elemental.stereosteve.com"
+  },
+  {
+    title: "aTunes",
+    description: "A retro iTunes theme for the audius protocol.",
+    link: "https://atunes.audius.community"
   }
 ];
 
