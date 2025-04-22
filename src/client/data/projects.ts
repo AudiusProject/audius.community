@@ -6,11 +6,6 @@ export interface Project {
 
 const projects: Project[] = [
   {
-    title: "w3.audio",
-    description: "block explorer and dig tool for discovery music on the audius protocol",
-    link: "https://w3.audio"
-  },
-  {
     title: "Fanlink",
     description: "Shareable pages that link to all your track's stores. Automatically generated for all tracks on audius, pulling links from track descriptions.",
     link: "https://fanlink.audius.community"
