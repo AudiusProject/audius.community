@@ -39,6 +39,11 @@ const projects: Project[] = [
     title: "aTunes",
     description: "A retro iTunes theme for the audius protocol.",
     link: "https://atunes.audius.community"
+  },
+  {
+    title: "w3.audio",
+    description: "a block explorer for the audius protocol",
+    link: "https://w3.audio"
   }
 ];
 
