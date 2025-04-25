@@ -44,7 +44,12 @@ const projects: Project[] = [
     title: "w3.audio",
     description: "a block explorer for the audius protocol",
     link: "https://w3.audio"
-  }
+  },
+  {
+    title: "Constellations",
+    description: "A clustering algorithm to help you discover new music on Audius",
+    link: "https://seancena.github.io/constellation"
+  },
 ];
 
 export default projects; 
