@@ -50,6 +50,11 @@ const projects: Project[] = [
     description: "A clustering algorithm to help you discover new music on Audius",
     link: "https://seancena.github.io/constellation"
   },
+  {
+    title: "Snag (for Audius)",
+    description: "A lightweight Chrome extension that lets you quickly grab assets from Audius artist profiles, tracks, playlists, and albums",
+    link: "https://chromewebstore.google.com/detail/snag-for-audius/npejkafkeiijgglcnlggkhjckhochmij"
+  }
 ];
 
 export default projects; 
