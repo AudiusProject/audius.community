@@ -57,7 +57,7 @@ const projects: Project[] = [
   },
   {
     title: "audiusKit",
-    description: "A modern Swift package for integrating Audius music content into your iOS, macOS, tvOS, or watchOS app. AudiusKit provides a type-safe, async/await-based read-only API for accessing and streaming content from the Audius Music catalogue."
+    description: "A modern Swift package for integrating Audius music content into your iOS, macOS, tvOS, or watchOS app. AudiusKit provides a type-safe, async/await-based read-only API for accessing and streaming content from the Audius Music catalogue.",
     link: "https://github.com/julianbaker/audiusKit"
   }
 ];
