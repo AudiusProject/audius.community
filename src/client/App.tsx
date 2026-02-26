@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FloatingMusicControls } from "./contexts/MusicContext";
 
 // Original search text constant
-const ORIGINAL_SEARCH_TEXT = "projects Built on the Open Audio Protocol";
+const ORIGINAL_SEARCH_TEXT = "projects built on the Open Audio Protocol";
 
 export default function App() {
   const [searchKey, setSearchKey] = useState<number>(0);
