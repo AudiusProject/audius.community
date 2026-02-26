@@ -1,0 +1,29 @@
+/* Retro Google style - serif font, 3D bevel, embossed */
+@import url("https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap");
+
+.retro-google-community {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Bitter", Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.retro-google-community:focus {
+  outline: none;
+}
+
+.retro-letter {
+  display: inline-block;
+  /* Subtle embossed border */
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+  /* Light emboss - top-left highlight, bottom-right shadow */
+  text-shadow:
+    -1px -1px 0 rgba(255, 255, 255, 0.5),
+    -2px -2px 0 rgba(255, 255, 255, 0.35),
+    1px 1px 0 rgba(0, 0, 0, 0.25),
+    2px 2px 0 rgba(0, 0, 0, 0.2);
+}

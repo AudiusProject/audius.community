@@ -12,7 +12,7 @@ body:
 
         Criteria:
         * Project must be open source
-        * Project must be built on the Audius protocol
+        * Project must be built on the Open Audio Protocol
         * Show developer badges where possible
 
   - type: input
