@@ -2,10 +2,10 @@ import { Flex, Text } from "@audius/harmony";
 
 // Array of SVG badge files
 const badgeFiles = [
-  "badgePoweredByAudiusLight.svg",
+  "badgePoweredByOpenAudioLight.svg",
   "badgeBuiltWithAudiusLight.svg",
   "badgeStreamingFromAudiusLight.svg",
-  "badgePoweredByAudiusDark.svg",
+  "badgePoweredByOpenAudioDark.svg",
   "badgeBuiltWithAudiusDark.svg",
   "badgeStreamingFromAudiusDark.svg",
 ];

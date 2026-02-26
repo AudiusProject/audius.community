@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useRef, useContext } from 'react';
 import { Track } from '@audius/sdk';
-import { useSdk } from '../hooks/useSdk';
 
 // Define the shape of our context
 interface MusicContextType {
@@ -22,7 +21,6 @@ const MusicContext = createContext<MusicContextType | undefined>(undefined);
 
 // Provider component
 export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { sdk } = useSdk();
   const [tracks, setTracks] = useState<Track[]>([]);
   const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -37,16 +35,9 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return tracks.findIndex(track => track.id === trackId);
   };
 
-  // Get stream URL for a track
-  const getStreamUrl = async (trackId: string): Promise<string | null> => {
-    try {
-      const response = await sdk.tracks.getTrackStreamUrl({ trackId });
-      return response;
-    } catch (error) {
-      console.error('Error getting stream URL:', error);
-      return null;
-    }
-  };
+  // Get stream URL for a track (use Audius API directly - SDK discovery node returns null in browser)
+  const getStreamUrl = (trackId: string): string =>
+    `https://api.audius.co/v1/tracks/${trackId}/stream`;
 
   // Skip to the next track
   const skipToNextTrack = async () => {
@@ -137,7 +128,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setPlayingTrackId(null);
 
     // Get the stream URL for the new track
-    const streamUrl = await getStreamUrl(trackId);
+    const streamUrl = getStreamUrl(trackId);
     
     if (streamUrl) {
       // Create a new audio element if it doesn't exist

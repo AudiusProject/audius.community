@@ -1,5 +1,6 @@
 import pages from '@hono/vite-cloudflare-pages'
 import devServer from '@hono/vite-dev-server'
+import react from '@vitejs/plugin-react'
 import { UserConfig, defineConfig } from 'vite'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
@@ -19,6 +20,7 @@ export default defineConfig(({ mode }) => {
         '**/*.svg',
       ],
       plugins: [
+        react(),
         nodePolyfills({
           globals: {
             process: true,
@@ -53,6 +55,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      react(),
       pages({
         entry: 'src/index.tsx'
       }),

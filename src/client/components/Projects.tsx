@@ -51,8 +51,28 @@ const Projects: React.FC = () => {
           >
             {project.title}
           </div>
-          <div className="text-[#00802A] text-[13px] leading-[1.4]">
-            {project.link}
+          <div className="text-[13px] leading-[1.4]">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#00802A] hover:underline"
+            >
+              {project.link}
+            </a>
+            {project.repository && (
+              <>
+                {' '}
+                <a
+                  href={project.repository}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#6e5494] hover:underline"
+                >
+                  [code]
+                </a>
+              </>
+            )}
           </div>
           <div className="text-black text-[13px] leading-[1.4] mt-[1px] font-[Arial]">
             {project.description}

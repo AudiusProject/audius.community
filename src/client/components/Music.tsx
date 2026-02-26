@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSdk } from "../hooks/useSdk";
 import { useMusicContext } from "../contexts/MusicContext";
 
 interface MusicProps {
@@ -8,7 +7,6 @@ interface MusicProps {
 }
 
 const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
-  const { sdk } = useSdk();
   const {
     tracks,
     setTracks,
@@ -54,8 +52,9 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
 
   // Search for tracks
   const searchTracks = async () => {
+    const query = searchText.trim();
     // Special case for empty search or "trending" keyword
-    if (!searchText.trim() || searchText.trim().toLowerCase() === "trending") {
+    if (!query || query.toLowerCase() === "trending") {
       // Show trending tracks for empty search or "trending" keyword
       fetchTrendingTracks();
       setDisplayedSearchText("trending");
@@ -68,15 +67,14 @@ const Music: React.FC<MusicProps> = ({ searchText, onSearch }) => {
       setIsLoading(true);
       setIsSearchResult(true);
       // Update the displayed search text when search is triggered
-      setDisplayedSearchText(searchText);
+      setDisplayedSearchText(query);
 
-      // Search tracks from Audius SDK
-      const response = await sdk.tracks.searchTracks({
-        query: searchText,
-      });
-
-      const data = response.data || [];
-      setTracks(data);
+      // Search tracks via Audius REST API (same pattern as trending)
+      const response = await fetch(
+        `https://api.audius.co/v1/tracks/search?query=${encodeURIComponent(query)}&limit=10`,
+      );
+      const data = await response.json();
+      setTracks(data.data || []);
     } catch (error) {
       console.error("Error searching tracks:", error);
     } finally {

@@ -1,10 +1,15 @@
-/* Retro Google style - serif font, 3D bevel, embossed */
-@import url("https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap");
+/* Retro Google style - Catull font (original Google logo font), 3D bevel, embossed */
+@font-face {
+  font-family: "Catull";
+  src: url("/static/fonts/Catull.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
 
 .retro-google-community {
   display: inline-flex;
   align-items: center;
-  font-family: "Bitter", Georgia, "Times New Roman", serif;
+  font-family: "Catull Medium", Georgia, "Times New Roman", serif;
   font-size: 38px;
   font-weight: 700;
   letter-spacing: -1px;

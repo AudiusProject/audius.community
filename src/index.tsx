@@ -11,6 +11,18 @@ app.get('/', (c) => {
           <meta charSet='utf-8' />
           <meta content='width=device-width, initial-scale=1' name='viewport' />
           <link rel="icon" href="/static/favicon.png" type="image/png" />
+          {!import.meta.env.PROD && (
+            <script
+              type='module'
+              dangerouslySetInnerHTML={{
+                __html: `import RefreshRuntime from '/@react-refresh'
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true`
+              }}
+            />
+          )}
           {import.meta.env.PROD ? (
             <script type='module' src='/static/client/main.js'></script>
           ) : (
