@@ -105,6 +105,13 @@ const projects: Project[] = [
       "BlockBeats is a full-featured mobile music player and alternative client to audius.co.",
     link: "https://blockbeats.app",
   },
+  {
+    title: "Audius Song of the Day",
+    description:
+      "A feature-rich Discord Bot which chooses one song each day from the Audius API to highlight to the community. It includes server-wide notifications, DM subscriptions and an optional ping role.",
+    link: "https://audius-sotd.tobezdev.com",
+    repository: "https://github.com/tobezdev/Audius-Song-of-the-Day",
+  },
 ];
 
 export default projects;
