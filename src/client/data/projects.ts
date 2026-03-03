@@ -99,6 +99,12 @@ const projects: Project[] = [
     link: "https://audiobase.co",
     repository: "https://github.com/Radiotomy/audius-base-harmony",
   },
+  {
+    title: "BlockBeats",
+    description:
+      "BlockBeats is a full-featured mobile music player and alternative client to audius.co.",
+    link: "https://blockbeats.app",
+  },
 ];
 
 export default projects;
