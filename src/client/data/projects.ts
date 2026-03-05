@@ -32,6 +32,13 @@ const projects: Project[] = [
     repository: "https://github.com/Kyle-Shanks/audius_cli_player_test",
   },
   {
+    title: "Lofi Radio",
+    description:
+      "Curated beats to study and relax to. A 24/7 lofi radio station streaming from the Open Audio Protocol.",
+    link: "https://lofi-radio.audius.community",
+    repository: "https://github.com/AudiusProject/lofi-radio.audius.community",
+  },
+  {
     title: "Lyrics On Chain",
     description: "A tool to automatically add lyrics to your tracks on Audius",
     link: "http://lyricsonchain.com/",
