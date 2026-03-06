@@ -117,7 +117,7 @@ const projects: Project[] = [
     description:
       "A feature-rich Discord Bot which chooses one song each day from the Audius API to highlight to the community. It includes server-wide notifications, DM subscriptions and an optional ping role.",
     link: "https://audius-sotd.tobezdev.com",
-    repository: "https://github.com/tobezdev/Audius-Song-of-the-Day",
+    repository: "https://github.com/tobezdev/Audius-Song-of-the-Day-Bot",
   },
 ];
 
