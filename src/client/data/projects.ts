@@ -125,6 +125,12 @@ const projects: Project[] = [
       "A collective curation experiment. Your outie will be proud of you.",
     link: "https://macrovibe.click",
   },
+  {
+    title: "Mar10",
+    description: "Happy Mar10 day! The strongest power-up is Open Audio.",
+    link: "https://mar10.vercel.app",
+    repository: "https://github.com/raymondjacobson/mar10",
+  },
 ];
 
 export default projects;
