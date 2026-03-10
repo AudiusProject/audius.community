@@ -119,6 +119,12 @@ const projects: Project[] = [
     link: "https://audius-sotd.tobezdev.com",
     repository: "https://github.com/tobezdev/Audius-Song-of-the-Day",
   },
+  {
+    title: "MacroVibe Refinement",
+    description:
+      "A collective curation experiment. Your outie will be proud of you.",
+    link: "https://macrovibe.click",
+  },
 ];
 
 export default projects;
