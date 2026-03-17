@@ -131,6 +131,11 @@ const projects: Project[] = [
     link: "https://mar10.vercel.app",
     repository: "https://github.com/raymondjacobson/mar10",
   },
+  {
+    title: "Drift",
+    description: "A focused music player powered by Open Audio",
+    link: "https://drift.audius.community",
+  },
 ];
 
 export default projects;
