@@ -35,7 +35,6 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return tracks.findIndex(track => track.id === trackId);
   };
 
-  // Get stream URL for a track (use Audius API directly - SDK validator node lookup returns null in browser)
   const getStreamUrl = (trackId: string): string =>
     `https://api.audius.co/v1/tracks/${trackId}/stream`;
 
