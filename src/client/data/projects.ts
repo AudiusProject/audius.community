@@ -13,6 +13,10 @@ const projects: Project[] = [
     link: "https://fanlink.audius.community",
   },
   {
+    title: "Audius Leaderboard",
+    description: "An Audius engagement leaderboard",
+    link: "https://leaderboard.audius.community",
+  {
     title: "Stem Splitter",
     description: "An AI tool for splitting stems out from a track on audius",
     link: "https://stemsplitter.audius.community",
